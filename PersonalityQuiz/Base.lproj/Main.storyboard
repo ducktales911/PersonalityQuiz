@@ -222,8 +222,7 @@
                                         <rect key="frame" x="155" y="84.333333333333314" width="104" height="30"/>
                                         <state key="normal" title="Submit Answer"/>
                                         <connections>
-                                            <action selector="rangedAnswerButtonPressed" destination="CDG-xf-QAI" eventType="touchUpInside" id="RRZ-WT-B5D"/>
-                                            <action selector="rangedAnswerButtonPressed:" destination="CDG-xf-QAI" eventType="touchUpInside" id="aco-c2-1Qv"/>
+                                            <action selector="rangedAnswerButtonPressed" destination="CDG-xf-QAI" eventType="touchUpInside" id="jPR-O4-UI9"/>
                                         </connections>
                                     </button>
                                 </subviews>

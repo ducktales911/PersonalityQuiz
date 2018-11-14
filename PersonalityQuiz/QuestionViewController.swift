@@ -51,14 +51,6 @@ class QuestionViewController: UIViewController {
         nextQuestion()
     }
     
-    
-    @IBAction func rangedAnswerButtonPressed() {
-        let currentAnswers = questions[questionIndex].answers
-        let index = Int(round(rangedSlider.value * Float(currentAnswers.count - 1)))
-        answersChosen.append(currentAnswers[index])
-        nextQuestion()
-    }
-    
     @IBOutlet weak var questionLabel: UILabel!
 
     @IBOutlet weak var singleStackView: UIStackView!
@@ -83,6 +75,13 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var rangedSlider: UISlider!
     
     @IBOutlet weak var questionProgressView: UIProgressView!
+    
+    @IBAction func rangedAnswerButtonPressed() {
+        let currentAnswers = questions[questionIndex].answers
+        let index = Int(round(rangedSlider.value * Float(currentAnswers.count - 1)))
+        answersChosen.append(currentAnswers[index])
+        nextQuestion()
+    }
     
     var questions: [Question] = [
         Question(text: "Which food do you like the most?", type: .single,
