@@ -9,13 +9,13 @@
 import UIKit
 
 class QuestionViewController: UIViewController {
-    
+
     var questionIndex = 0
     var answersChosen: [Answer] = []
-  
+
     @IBAction func singleAnswerButtonPressed(_ sender: UIButton) {
         let currentAnswers = questions[questionIndex].answers
-        
+
         switch sender {
         case singleButton1:
             answersChosen.append(currentAnswers[0])
@@ -28,13 +28,13 @@ class QuestionViewController: UIViewController {
         default:
             break
         }
-        
+
         nextQuestion()
     }
-    
+
     @IBAction func multipleAnswerButtonPressed() {
         let currentAnswers = questions[questionIndex].answers
-        
+
         if multipleSwitch1.isOn {
             answersChosen.append(currentAnswers[0])
         }
@@ -47,10 +47,10 @@ class QuestionViewController: UIViewController {
         if multipleSwitch4.isOn {
             answersChosen.append(currentAnswers[3])
         }
-        
+
         nextQuestion()
     }
-    
+
     @IBOutlet weak var questionLabel: UILabel!
 
     @IBOutlet weak var singleStackView: UIStackView!
@@ -58,7 +58,7 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var singleButton2: UIButton!
     @IBOutlet weak var singleButton3: UIButton!
     @IBOutlet weak var singleButton4: UIButton!
-    
+
     @IBOutlet weak var multipleStackView: UIStackView!
     @IBOutlet weak var multipleLabel1: UILabel!
     @IBOutlet weak var multipleLabel2: UILabel!
@@ -68,21 +68,21 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var multipleSwitch2: UISwitch!
     @IBOutlet weak var multipleSwitch3: UISwitch!
     @IBOutlet weak var multipleSwitch4: UISwitch!
-    
+
     @IBOutlet weak var rangedStackView: UIStackView!
     @IBOutlet weak var rangedLabel1: UILabel!
     @IBOutlet weak var rangedLabel2: UILabel!
     @IBOutlet weak var rangedSlider: UISlider!
-    
+
     @IBOutlet weak var questionProgressView: UIProgressView!
-    
+
     @IBAction func rangedAnswerButtonPressed() {
         let currentAnswers = questions[questionIndex].answers
         let index = Int(round(rangedSlider.value * Float(currentAnswers.count - 1)))
         answersChosen.append(currentAnswers[index])
         nextQuestion()
     }
-    
+
     var questions: [Question] = [
         Question(text: "Which food do you like the most?", type: .single,
             answers: [
@@ -90,7 +90,6 @@ class QuestionViewController: UIViewController {
                 Answer(text: "Fish", type: .cat),
                 Answer(text: "Carrots", type: .rabbit), Answer(text: "Corn", type: .turtle)
             ]),
-        
         Question(text: "Which activities do you enjoy?",
             type: .multiple,
             answers: [
@@ -99,7 +98,6 @@ class QuestionViewController: UIViewController {
                 Answer(text: "Cuddling", type: .rabbit),
                 Answer(text: "Eating", type: .dog)
             ]),
-        
         Question(text: "How much do you enjoy car rides?",
             type: .ranged,
             answers: [
@@ -109,20 +107,20 @@ class QuestionViewController: UIViewController {
                 Answer(text: "I love them", type: .dog)
             ])
     ]
-    
+
     func updateUI() {
         singleStackView.isHidden = true
         multipleStackView.isHidden = true
         rangedStackView.isHidden = true
-        
+
         let currentQuestion = questions[questionIndex]
         let currentAnswers = currentQuestion.answers
         let totalProgress = Float(questionIndex) / Float(questions.count)
-        
+
         navigationItem.title = "Question #\(questionIndex+1)"
         questionLabel.text = currentQuestion.text
         questionProgressView.setProgress(totalProgress, animated: true)
-        
+
         switch currentQuestion.type {
         case .single:
             updateSingleStack(using: currentAnswers)
@@ -132,7 +130,7 @@ class QuestionViewController: UIViewController {
             updateRangedStack(using: currentAnswers)
         }
     }
-    
+
     func updateSingleStack(using answers: [Answer]) {
         singleStackView.isHidden = false
         singleButton1.setTitle(answers[0].text, for: .normal)
@@ -140,7 +138,7 @@ class QuestionViewController: UIViewController {
         singleButton3.setTitle(answers[2].text, for: .normal)
         singleButton4.setTitle(answers[3].text, for: .normal)
     }
-    
+
     func updateMultipleStack(using answers: [Answer]) {
         multipleStackView.isHidden = false
         multipleSwitch1.isOn = false
@@ -152,24 +150,24 @@ class QuestionViewController: UIViewController {
         multipleLabel3.text = answers[2].text
         multipleLabel4.text = answers[3].text
     }
-    
+
     func updateRangedStack(using answers: [Answer]) {
         rangedStackView.isHidden = false
         rangedSlider.setValue(0.5, animated: false)
         rangedLabel1.text = answers.first?.text
         rangedLabel2.text = answers.last?.text
     }
-    
+
     func nextQuestion() {
         questionIndex += 1
-        
+
         if questionIndex < questions.count {
             updateUI()
         } else {
             performSegue(withIdentifier: "ResultsSegue", sender: nil)
         }
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ResultsSegue" {
             let resultsViewController = segue.destination as! ResultsViewController
@@ -182,7 +180,6 @@ class QuestionViewController: UIViewController {
         updateUI()
         // Do any additional setup after loading the view.
     }
-    
 
     /*
     // MARK: - Navigation

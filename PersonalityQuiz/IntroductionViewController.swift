@@ -10,14 +10,12 @@ import UIKit
 
 class IntroductionViewController: UIViewController {
 
+    // Nodig voor de segue vanaf de Results view.
     @IBAction func unwindToQuizIntroduction(segue: UIStoryboardSegue) {
-        
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
-
 }
-
