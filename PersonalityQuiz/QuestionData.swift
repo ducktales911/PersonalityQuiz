@@ -8,14 +8,14 @@
 
 import Foundation
 
-// Bevat de data van een enkele vraag.
+// Bevat een vraag, de ResponseType en het antwoord.
 struct Question {
     var text: String
     var type: ResponseType
     var answers: [Answer]
 }
 
-//
+// Om vraagtype aan te duiden.
 enum ResponseType {
     case single, multiple, ranged
 }
@@ -26,7 +26,7 @@ struct Answer {
     var type: AnimalType
 }
 
-//  
+//  Representeert elk persoonlijkheidstype die in de Results view wordt weergegeven.
 enum AnimalType: Character {
     case dog = "🐶", cat = "🐱", rabbit = "🐰", turtle = "🐢"
 

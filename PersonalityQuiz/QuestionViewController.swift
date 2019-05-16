@@ -13,6 +13,32 @@ class QuestionViewController: UIViewController {
     var questionIndex = 0
     var answersChosen: [Answer] = []
 
+    @IBOutlet weak var questionLabel: UILabel!
+    
+    @IBOutlet weak var singleStackView: UIStackView!
+    @IBOutlet weak var singleButton1: UIButton!
+    @IBOutlet weak var singleButton2: UIButton!
+    @IBOutlet weak var singleButton3: UIButton!
+    @IBOutlet weak var singleButton4: UIButton!
+    
+    @IBOutlet weak var multipleStackView: UIStackView!
+    @IBOutlet weak var multipleLabel1: UILabel!
+    @IBOutlet weak var multipleLabel2: UILabel!
+    @IBOutlet weak var multipleLabel3: UILabel!
+    @IBOutlet weak var multipleLabel4: UILabel!
+    @IBOutlet weak var multipleSwitch1: UISwitch!
+    @IBOutlet weak var multipleSwitch2: UISwitch!
+    @IBOutlet weak var multipleSwitch3: UISwitch!
+    @IBOutlet weak var multipleSwitch4: UISwitch!
+    
+    @IBOutlet weak var rangedStackView: UIStackView!
+    @IBOutlet weak var rangedLabel1: UILabel!
+    @IBOutlet weak var rangedLabel2: UILabel!
+    @IBOutlet weak var rangedSlider: UISlider!
+    
+    @IBOutlet weak var questionProgressView: UIProgressView!
+    
+    // Voeg antwoord toe aan aswersChosen en voer nextQuestion uit().
     @IBAction func singleAnswerButtonPressed(_ sender: UIButton) {
         let currentAnswers = questions[questionIndex].answers
 
@@ -32,6 +58,7 @@ class QuestionViewController: UIViewController {
         nextQuestion()
     }
 
+    // Voeg antwoord toe aan aswersChosen en voer nextQuestion uit().
     @IBAction func multipleAnswerButtonPressed() {
         let currentAnswers = questions[questionIndex].answers
 
@@ -51,31 +78,8 @@ class QuestionViewController: UIViewController {
         nextQuestion()
     }
 
-    @IBOutlet weak var questionLabel: UILabel!
 
-    @IBOutlet weak var singleStackView: UIStackView!
-    @IBOutlet weak var singleButton1: UIButton!
-    @IBOutlet weak var singleButton2: UIButton!
-    @IBOutlet weak var singleButton3: UIButton!
-    @IBOutlet weak var singleButton4: UIButton!
-
-    @IBOutlet weak var multipleStackView: UIStackView!
-    @IBOutlet weak var multipleLabel1: UILabel!
-    @IBOutlet weak var multipleLabel2: UILabel!
-    @IBOutlet weak var multipleLabel3: UILabel!
-    @IBOutlet weak var multipleLabel4: UILabel!
-    @IBOutlet weak var multipleSwitch1: UISwitch!
-    @IBOutlet weak var multipleSwitch2: UISwitch!
-    @IBOutlet weak var multipleSwitch3: UISwitch!
-    @IBOutlet weak var multipleSwitch4: UISwitch!
-
-    @IBOutlet weak var rangedStackView: UIStackView!
-    @IBOutlet weak var rangedLabel1: UILabel!
-    @IBOutlet weak var rangedLabel2: UILabel!
-    @IBOutlet weak var rangedSlider: UISlider!
-
-    @IBOutlet weak var questionProgressView: UIProgressView!
-
+    // Voeg antwoord toe aan aswersChosen en voer nextQuestion uit().
     @IBAction func rangedAnswerButtonPressed() {
         let currentAnswers = questions[questionIndex].answers
         let index = Int(round(rangedSlider.value * Float(currentAnswers.count - 1)))
@@ -83,6 +87,7 @@ class QuestionViewController: UIViewController {
         nextQuestion()
     }
 
+    // Array die alle Question items bevat.
     var questions: [Question] = [
         Question(text: "Which food do you like the most?", type: .single,
             answers: [
@@ -108,6 +113,7 @@ class QuestionViewController: UIViewController {
             ])
     ]
 
+    // Laat de juiste StackView zien die hoort bij de QuestionType van de huidige vraage en update questionLabel en voortgangsindicatioren.
     func updateUI() {
         singleStackView.isHidden = true
         multipleStackView.isHidden = true
@@ -131,6 +137,7 @@ class QuestionViewController: UIViewController {
         }
     }
 
+    // Laat de antwoorden zien als vraagtype single is.
     func updateSingleStack(using answers: [Answer]) {
         singleStackView.isHidden = false
         singleButton1.setTitle(answers[0].text, for: .normal)
@@ -139,6 +146,7 @@ class QuestionViewController: UIViewController {
         singleButton4.setTitle(answers[3].text, for: .normal)
     }
 
+    // Laat de antwoorden zien als vraagtype multiple is.
     func updateMultipleStack(using answers: [Answer]) {
         multipleStackView.isHidden = false
         multipleSwitch1.isOn = false
@@ -151,6 +159,7 @@ class QuestionViewController: UIViewController {
         multipleLabel4.text = answers[3].text
     }
 
+    // Laat de slider zien als vraagtype ranged is.
     func updateRangedStack(using answers: [Answer]) {
         rangedStackView.isHidden = false
         rangedSlider.setValue(0.5, animated: false)
@@ -158,6 +167,7 @@ class QuestionViewController: UIViewController {
         rangedLabel2.text = answers.last?.text
     }
 
+    // Ga naar colgende vraag, of naar de Results view na de laatste vraag.
     func nextQuestion() {
         questionIndex += 1
 
@@ -168,6 +178,7 @@ class QuestionViewController: UIViewController {
         }
     }
 
+    // Geef answersChosen array door aan resultsViewController.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ResultsSegue" {
             let resultsViewController = segue.destination as! ResultsViewController
